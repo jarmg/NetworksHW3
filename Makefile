@@ -6,8 +6,7 @@ JC = javac
 
 CLASSES = \
 		  Server.java \
-		  Client.java \
-		  AeSimpleSHA1.java 
+		  Client.java 
 default: classes
 
 classes: $(CLASSES:.java=.class)

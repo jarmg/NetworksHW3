@@ -15,7 +15,8 @@ public class Client {
 //Authentication & Socket creation
      try{
 	     Socket chatSocket = new Socket(hostName, portNumber);
-      	 PrintWriter out =
+      	 System.out.println("Socket established");
+		 PrintWriter out =
                new PrintWriter(chatSocket.getOutputStream(), true);
            BufferedReader in =
                new BufferedReader(
