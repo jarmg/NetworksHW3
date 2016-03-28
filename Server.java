@@ -109,12 +109,13 @@ public class Server implements Runnable{
 				out.println(0);
 				return 0;	
 			}
-         }
+    
      catch(IOException e)
        {System.exit(1);}
-     		return 0;
-	}	
-	}	
+     	return 0;
+   
+   }
+ }
 	static void logUserOn()
 	{}
 	
