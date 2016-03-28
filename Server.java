@@ -3,38 +3,42 @@ import java.net.*;
 import java.util.*;
 import java.security.*;
 
-public class Server {
-  	public static void main(String[] args){
-	
-   ServerSocket lisSock;
+public class Server implements Runnable{
+  	ServerSocket lisSock;
    HashMap<String, String> loginMap = new HashMap<String, String>();
    HashMap<String, Integer> failureLog = new HashMap<String, Integer>();
+  	HashMap<String, Integer> recentUserMap = new HashMap<String, Integer>();
    int lisPort;
-     
-	if(args.length != 1){
+  	Socket clSock;
+	  
+  
+  public Server(int port) throws FileNotFoundException, IOException
+  {
+	   lisPort = port;
+    	loadDB();
+    	listen();          
+  }
+    
+  public static void main(String[] args) throws NumberFormatException, FileNotFoundException, IOException
+  {
+	 if(args.length != 1){
 		System.out.println("Usage: Server <port_number>"); 
       System.exit(1);} //Check input
 	
-   lisPort = Integer.parseInt(args[0]);
+    Server server = new Server(Integer.parseInt(args[0]));
+  }   
+     		
 
-	
-
-	try{
-		loadDB(loginMap, args);
-		System.out.println(lisPort);	
-		System.out.println("done with db");	
-		//Establish Socket connection
+	public void listen() throws IOException
+   {
 		lisSock = new ServerSocket(lisPort);
-		System.out.println("about to listen");
-		Socket clSock = lisSock.accept();
-		System.out.println("connection established");
-		//Create IO for socket
-		PrintWriter out = new PrintWriter(clSock.getOutputStream(), true);
-		BufferedReader in = new BufferedReader(
-			new InputStreamReader(clSock.getInputStream()));
-		int validLogin = authentication(clSock, loginMap, out, in, failureLog);
-				
-	} 
+		while(true)
+      {
+        try{clSock = lisSock.accept();
+			System.out.println("connection established");
+			new Thread(this).start();
+        }
+        
 
     catch(NumberFormatException e)
      {}
@@ -49,27 +53,39 @@ public class Server {
 		 System.exit(1);
 	 }
   }
+ }
 
-	static int authentication(Socket socket, HashMap<String, String> map, PrintWriter out, 
-                             BufferedReader in, HashMap<String, Integer> failLog) throws IOException, NumberFormatException
+  public void run()
+  {
+
+    	PrintWriter out = null;
+    	BufferedReader in = null;
+    	open(clSock, in, out); 
+    	authentication(clSock, out, in);
+
+  }
+  
+  	int authentication(Socket socket, PrintWriter out, 
+                             BufferedReader in) throws NumberFormatException
 	{
-
-		String userName, pswd, textOut;
+		try{
+		
+      String userName, pswd;
 		//Ask for username and password (should spawn thread around here)
 		out.println("Please enter your username: ");
 		userName = in.readLine();
 		out.println("Password: ");
 		pswd = in.readLine();
 		//pswd = AeSimpleSHA1.SHA1(in.readLine());
-
-		if(map.get(userName)==null)
+     
+		if(loginMap.get(userName)==null)
 		{
 			out.println("Sorry, that username doesn't exist. Please try again.");
 			out.println(0);
 			return 0;
 		}
 		
-		else if(map.get(userName) == pswd) 
+		else if(loginMap.get(userName) == pswd) 
 			{
 				logUserOn(); 
 				out.println(1);
@@ -77,19 +93,28 @@ public class Server {
 			}	
 			else
 			{
-				logonFailure(socket, userName, failLog); 
+				logonFailure(clSock, userName, failureLog); 
 				out.println(0);
 				return 0;	
 			}
+         }
+     catch(IOException e)
+       {System.exit(1);}
+     		return 0;
 	}	
-
-		
-	
 	
 	static void logUserOn()
 	{}
 	
-	
+	void open(Socket sock, BufferedReader in, PrintWriter out) {
+    try{
+     out = new PrintWriter(sock.getOutputStream(), true);
+           in = new BufferedReader(
+                   new InputStreamReader(sock.getInputStream()));
+    }
+     catch(IOException e)
+       {System.exit(1);}
+    }
 	static void logonFailure(Socket socket, String userName, HashMap<String, Integer> fLog)
 	{
      String d = userName.concat(socket.getRemoteSocketAddress().toString());
@@ -100,15 +125,15 @@ public class Server {
         fLog.put(d, 1);
      if(fLog.get(d) == 3)
       {
-       socket.close();
-     	 addToBlock(60000);
+       //socket.close();
+     	 //addToBlock(60000);
       }
    }
          
 
 
 
-	static void loadDB(HashMap<String, String> map, String[] args) throws IOException, FileNotFoundException
+	void loadDB() throws IOException, FileNotFoundException
 	{
        	FileReader lI = new FileReader("user_pass.txt");
        	BufferedReader loginText = new BufferedReader(lI);
@@ -118,7 +143,7 @@ public class Server {
 						String[] creds = pwd.split(" ");
 						String	pass = creds[1];
 					//	String pass = AeSimpleSHA1.SHA1(creds[1]);
-						map.put(creds[0], pass);
+						loginMap.put(creds[0], pass);
 		
 		//System.out.println(pwd);
 		//System.out.println("Size is now " + loginMap.size());
@@ -131,3 +156,4 @@ public class Server {
 	}	
 	
 }
+
