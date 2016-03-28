@@ -46,13 +46,15 @@ public class Server {
 		pswd = in.readLine();
 		//pswd = AeSimpleSHA1.SHA1(in.readLine());
 		try{
-			(map.get(userName));}
+			(map.get(userName))==null;}
 		catch(NumberFormatException e){
 			out.println("Sorry, that username doesn't exist. Please try again.");
 			return 0;}
 		}
-			if(map.get(userName) == pswd) {logUserOn(); return 1;}	
-			else{logonFailure(); return 0;}}
+			if(map.get(userName) == pswd) 
+				{logUserOn(); return 1;}	
+			else{logonFailure(); 
+			return ;
 		
 		}
 	
