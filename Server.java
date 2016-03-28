@@ -34,10 +34,12 @@ public class Server implements Runnable{
 		lisSock = new ServerSocket(lisPort);
 		while(true)
       {
-        try{clSock = lisSock.accept();
+        System.out.println("while loop");
+		  try{clSock = lisSock.accept();
 			System.out.println("connection established");
 			new Thread(this).start();
-        }
+			
+	   	}
         
 
     catch(NumberFormatException e)
@@ -57,20 +59,30 @@ public class Server implements Runnable{
 
   public void run()
   {
-
-    	PrintWriter out = null;
-    	BufferedReader in = null;
-    	open(clSock, in, out); 
+	try{	
+		System.out.println("In open");
+     PrintWriter out = new PrintWriter(clSock.getOutputStream(), true);
+           BufferedReader in = new BufferedReader(
+                   new InputStreamReader(clSock.getInputStream()));
+		System.out.println("In run");
+    //	PrintWriter out = null;
+    //	BufferedReader in = null;
+    //	open(clSock, in, out); 
     	authentication(clSock, out, in);
 
+	}
+	catch(IOException e)
+	{System.exit(1);}
   }
   
   	int authentication(Socket socket, PrintWriter out, 
                              BufferedReader in) throws NumberFormatException
 	{
+	boolean valid = false;
 		try{
-		
-      String userName, pswd;
+	while(!valid)
+	{	
+		 String userName, pswd;
 		//Ask for username and password (should spawn thread around here)
 		out.println("Please enter your username: ");
 		userName = in.readLine();
@@ -102,19 +114,20 @@ public class Server implements Runnable{
        {System.exit(1);}
      		return 0;
 	}	
-	
+	}	
 	static void logUserOn()
 	{}
 	
-	void open(Socket sock, BufferedReader in, PrintWriter out) {
+/*	void open(Socket sock, BufferedReader in, PrintWriter out) {
     try{
+		System.out.println("In open");
      out = new PrintWriter(sock.getOutputStream(), true);
            in = new BufferedReader(
                    new InputStreamReader(sock.getInputStream()));
     }
      catch(IOException e)
        {System.exit(1);}
-    }
+    }*/
 	static void logonFailure(Socket socket, String userName, HashMap<String, Integer> fLog)
 	{
      String d = userName.concat(socket.getRemoteSocketAddress().toString());

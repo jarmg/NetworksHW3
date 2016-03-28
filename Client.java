@@ -25,9 +25,9 @@ public class Client {
                new BufferedReader(
                     new InputStreamReader(System.in));
   	
-				int loggedIn = 0; //1 when logged in successfully   
+				boolean logout = false; //1 when logged in successfully   
  	 	    	String serverMsg;
-			while(loggedIn == 0)
+			while(!logout)
 			{
 				serverMsg = in.readLine();
 				System.out.println(serverMsg); //Intro message for login info 	
@@ -35,7 +35,7 @@ public class Client {
 				out.println(input);
      			System.out.print(in.readLine());
      			out.println(stdIn.readLine());
-				loggedIn = Integer.parseInt(in.readLine());
+				//loggedIn = Integer.parseInt(in.readLine());
      			while ((serverMsg = in.readLine()) != null) //message for repeated login info
 					System.out.println(serverMsg);
 	 	 }
