@@ -41,6 +41,9 @@ public class Client {
      			out.println(stdIn.readLine());
      		  	loggedIn = Integer.parseInt(in.readLine());
     	 }
+		     //Now you're logged in
+     	while((serverMsg = in.readLine()) != null)
+           System.out.println(serverMsg);
 	}     
  	catch(UnknownHostException e){
      	System.out.println("Host could not be resolved. Program closing.");
@@ -51,9 +54,5 @@ public class Client {
         System.out.print("Had trouble establishing an IO connection with " + hostName);
         System.exit(1);
       }   			
-	
-     //Now you're logged in
-     while((serverMsg = in.readLine()) != null)
-           System.out.println(serverMsg);
-     }
+   }
 }
