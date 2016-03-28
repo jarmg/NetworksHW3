@@ -14,15 +14,17 @@ public class Server {
        	String uName = "test";
        	while((pwd = loginText.readLine()) != null)
 		{
+						String[] creds = pwd.split(" ");
+						loginMap.put(creds[0], creds[1]);
 		//Revers the hash entry when you actually end up parsing.	
 //			System.out.println(pwd);
-			loginMap.put(pwd, uName);
+
 //			System.out.println("Size is now " + loginMap.size());
 		}
 
 //Check hashmap print
-//		for(String entry: loginMap.values())
-//		   System.out.println("* " + entry + " *");
+		for(String entry: loginMap.values())
+		   System.out.println("* " + entry + " *");
 
 	} 
      catch(FileNotFoundException e)
