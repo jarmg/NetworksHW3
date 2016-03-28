@@ -13,9 +13,9 @@ public class Client {
      	int portNumber = Integer.parseInt(args[1]);
 
 //Authentication & Socket creation
-     try(
-      	Socket chatSocket = new Socket(hostName, portNumber);
-      	PrintWriter out =
+     try{
+	     Socket chatSocket = new Socket(hostName, portNumber);
+      	 PrintWriter out =
                new PrintWriter(chatSocket.getOutputStream(), true);
            BufferedReader in =
                new BufferedReader(
@@ -23,8 +23,12 @@ public class Client {
            BufferedReader stdIn =
                new BufferedReader(
                     new InputStreamReader(System.in))
-   		)
+   		}
+     catch(UnknownHostException e)
      {
+     	System.out.println("Host could not be resolved. Program closing.");
+     	System.exit(1);
+     }
 				int loggedIn = 0; //1 when logged in successfully
      
  	 	    	String serverMsg;
