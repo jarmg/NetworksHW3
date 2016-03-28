@@ -38,6 +38,7 @@ public class Server {
 //Establish Socket connection
 		ServerSocket lisSock = new ServerSocket(lisPort);	
 		Socket clSock = lisSock.accept();
+		System.out.println("Connection successful");
 		PrintWriter out =
 				new PrintWriter(clSock.getOutputStream(), true);
 		BufferedReader in = new BufferedReader(
@@ -46,7 +47,7 @@ public class Server {
 		String textIn, textOut;
 //Ask for username and password (should spawn thread around here)
 		out.print("Hey! You've connected to the chat server. " +
-		"Please enter your username and password as prompted" + System.getProperty("line.separator") + "Username: "  );
+		"Please enter your username and password as prompted" + "Username: "  );
 		textIn = in.readLine();
 		
 		out.println("This is the username you enetered, ya? - " + textIn);
