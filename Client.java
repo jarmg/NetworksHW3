@@ -23,19 +23,8 @@ public class Client {
            BufferedReader stdIn =
                new BufferedReader(
                     new InputStreamReader(System.in));
-   		}
-     catch(UnknownHostException e){
-     	System.out.println("Host could not be resolved. Program closing.");
-     	System.exit(1);
-     }
-		
-	catch(IOException e){
-        System.out.print("Had trouble establishing an IO connection with " + hostName);
-        System.exit(1);
-      }   			
-		
-			int loggedIn = 0; //1 when logged in successfully
-     
+  	
+			int loggedIn = 0; //1 when logged in successfully   
  	 	    	String serverMsg;
 				while ((serverMsg = in.readLine()) != null) //intro message for login info 
       	   	System.out.println(serverMsg); 
@@ -52,7 +41,17 @@ public class Client {
      			out.println(stdIn.readLine());
      		  	loggedIn = Integer.parseInt(in.readLine());
     	 }
-     
+	}     
+ 	catch(UnknownHostException e){
+     	System.out.println("Host could not be resolved. Program closing.");
+     	System.exit(1);
+     }
+		
+	catch(IOException e){
+        System.out.print("Had trouble establishing an IO connection with " + hostName);
+        System.exit(1);
+      }   			
+	
      //Now you're logged in
      while((serverMsg = in.readLine()) != null)
            System.out.println(serverMsg);
