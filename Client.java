@@ -24,13 +24,12 @@ public class Client {
                new BufferedReader(
                     new InputStreamReader(System.in));
   	
-			int loggedIn = 0; //1 when logged in successfully   
+				int loggedIn = 0; //1 when logged in successfully   
  	 	    	String serverMsg;
-     		System.out.println("1");
-				while ((serverMsg = in.readLine()) != null) //intro message for login info 
-      	   	System.out.println(serverMsg); 
-     		System.out.println("2");
-				String input = in.readLine();
+				serverMsg = in.readLine();
+				System.out.println(serverMsg); //Intro message for login info 
+				
+				String input = stdIn.readLine();
 				out.println(input);
      			System.out.print(in.readLine());
      			out.println(stdIn.readLine());

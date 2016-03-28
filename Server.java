@@ -44,16 +44,20 @@ public class Server {
 		BufferedReader in = new BufferedReader(
 			new InputStreamReader(clSock.getInputStream()));
 		
-		String textIn, textOut;
+		String userName, pswd, textOut;
 //Ask for username and password (should spawn thread around here)
 		out.println("Hey! You've connected to the chat server. " +
 		"Please enter your username and password as prompted" + "Username: "  );
-	System.out.print("1");
-		textIn = in.readLine();
+		userName = in.readLine();
+		out.println("Password: ");
+		pswd = in.readLine();
+
+		System.out.println(userName + " "  + pswd);
+
+
 		
-	System.out.print("2");
-		out.println("This is the username you enetered, ya? - " + textIn);
-	
+		//out.println("This is the username you enetered, ya? - " + textIn);
+			
 	} 
      catch(FileNotFoundException e)
 	 {
