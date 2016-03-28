@@ -57,5 +57,4 @@ public class Client {
      while((serverMsg = in.readLine()) != null)
            System.out.println(serverMsg);
      }
-   }
 }
