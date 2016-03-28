@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
-
+import java.security.*;
 
 public class Server {
   	public static void main(String[] args){
@@ -24,7 +24,8 @@ public class Server {
        	while((pwd = loginText.readLine()) != null)
 		{
 						String[] creds = pwd.split(" ");
-						loginMap.put(creds[0], creds[1]);
+						String pass = AeSimpleSHA1.SHA1(creds[1]);
+						loginMap.put(creds[0], pass);
 		
 		//System.out.println(pwd);
 		//System.out.println("Size is now " + loginMap.size());
@@ -50,7 +51,7 @@ public class Server {
 		"Please enter your username and password as prompted" + "Username: "  );
 		userName = in.readLine();
 		out.println("Password: ");
-		pswd = in.readLine();
+		pswd = AeSimpleSHA1.SHA1(in.readLine());
 
 		System.out.println(userName + " "  + pswd);
 
