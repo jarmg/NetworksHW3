@@ -22,14 +22,19 @@ public class Client {
                    new InputStreamReader(chatSocket.getInputStream()));
            BufferedReader stdIn =
                new BufferedReader(
-                    new InputStreamReader(System.in))
+                    new InputStreamReader(System.in));
    		}
-     catch(UnknownHostException e)
-     {
+     catch(UnknownHostException e){
      	System.out.println("Host could not be resolved. Program closing.");
      	System.exit(1);
      }
-				int loggedIn = 0; //1 when logged in successfully
+		
+	catch(IOException e){
+        System.out.print("Had trouble establishing an IO connection with " + hostName);
+        System.exit(1);
+      }   			
+		
+			int loggedIn = 0; //1 when logged in successfully
      
  	 	    	String serverMsg;
 				while ((serverMsg = in.readLine()) != null) //intro message for login info 
@@ -49,20 +54,8 @@ public class Client {
     	 }
      
      //Now you're logged in
-     
      while((serverMsg = in.readLine()) != null)
            System.out.println(serverMsg);
      }
-           
-     
-     	catch(UnknownHostException e) {
-        System.out.print("Cannot recognize specified host - system exiting...");
-        System.exit(1);
-      }
-     		
-  		catch(IOException e){
-        System.out.print("Had trouble establishing an IO connection with " + hostName);
-        System.exit(1);
-      }   		
    }
 }
