@@ -26,8 +26,7 @@ public class Server {
 		PrintWriter out = new PrintWriter(clSock.getOutputStream(), true);
 		BufferedReader in = new BufferedReader(
 			new InputStreamReader(clSock.getInputStream()));
-		int validLogin = authentication(loginMap, out, in);
-				
+		int validLogin = authentication(loginMap, out, in);		
 	} 
 
      catch(FileNotFoundException e)
@@ -56,20 +55,17 @@ public class Server {
 		if(map.get(userName)==null)
 		{
 			out.println("Sorry, that username doesn't exist. Please try again.");
-			out.println(0);
 			return 0;
 		}
 		
 		else if(map.get(userName) == pswd) 
 			{
 				logUserOn(); 
-				out.println(1);
 				return 1;
 			}	
 			else
 			{
 				logonFailure(); 
-				out.println(0);
 				return 0;	
 			}
 	}	
