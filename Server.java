@@ -7,6 +7,11 @@ public class Server {
   	public static void main(String[] args){
     
 //Load Database   
+	if(args.size() != 1)
+	{
+		System.out.print("Usage: Server <port_number>");
+		System.exit(1);
+	}
 	try
 	{
        	FileReader lI = new FileReader("user_pass.txt");
@@ -14,21 +19,38 @@ public class Server {
        	HashMap<String, String> loginMap = new HashMap<String, String>();
        	String pwd;
        	String uName = "test";
+       	lisPort = Integer.parseInt(args[0]);
+       	
        	while((pwd = loginText.readLine()) != null)
 		{
 						String[] creds = pwd.split(" ");
 						loginMap.put(creds[0], creds[1]);
-		//Revers the hash entry when you actually end up parsing.	
-//			System.out.println(pwd);
-
-//			System.out.println("Size is now " + loginMap.size());
+		
+		//System.out.println(pwd);
+		//System.out.println("Size is now " + loginMap.size());
 		}
 
-//Check hashmap print
-		//for(String entry: loginMap.values())
+		  //Check hashmap print
+		  //for(String entry: loginMap.values())
 		  // System.out.println("* " + entry + " *");
+	
+	
+//Establish Socket connection
+		ServerSocket lisSock = new ServerSocket(lisPort);	
+		Socket clSock = lisSock.accept();
+		PrintWriter out =
+				new PrintWriter(clSock.getOutputStream(), true);
+		BufferedReader in = new BufferedReader(
+			new InputStreamReader(clientSocket.getInputStream()));
 		
-		//
+		String textIn, textOut;
+//Ask for username and password (should spawn thread around here)
+		out.print("Hey! You've connected to the chat server. " +
+		"Please enter your username and password as prompted" + \n + "Password: ");
+		textIn = in.readLine();
+		
+		out.println("This is the username you enetered, ya? - " + textIn);
+	
 	} 
      catch(FileNotFoundException e)
 	 {
