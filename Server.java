@@ -45,10 +45,8 @@ public class Server {
 		
 		String textIn, textOut;
 //Ask for username and password (should spawn thread around here)
-		out.println("Hey! You've connected to the chat server. " +
-		"Please enter your username and password as prompted");
-	    System.out.println("bfr Password prompt");
-		out.print("Password: ");
+		out.print("Hey! You've connected to the chat server. " +
+		"Please enter your username and password as prompted" + System.getProperty("line.separator") + "Username: "  );
 		textIn = in.readLine();
 		
 		out.println("This is the username you enetered, ya? - " + textIn);
