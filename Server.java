@@ -5,7 +5,9 @@ import java.util.*;
 
 public class Server {
   	public static void main(String[] args){
-     try
+    
+//Load Database   
+	try
 	{
        	FileReader lI = new FileReader("user_pass.txt");
        	BufferedReader loginText = new BufferedReader(lI);
@@ -23,9 +25,10 @@ public class Server {
 		}
 
 //Check hashmap print
-		for(String entry: loginMap.values())
-		   System.out.println("* " + entry + " *");
-
+		//for(String entry: loginMap.values())
+		  // System.out.println("* " + entry + " *");
+		
+		//
 	} 
      catch(FileNotFoundException e)
 	 {
