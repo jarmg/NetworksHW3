@@ -26,12 +26,16 @@ public class Client {
   	
 			int loggedIn = 0; //1 when logged in successfully   
  	 	    	String serverMsg;
+     		System.out.println("1");
 				while ((serverMsg = in.readLine()) != null) //intro message for login info 
       	   	System.out.println(serverMsg); 
-     			out.println(stdIn.readLine());
+     		System.out.println("2");
+				String input = in.readLine();
+				out.println(input);
      			System.out.print(in.readLine());
      			out.println(stdIn.readLine());
       	 	loggedIn = Integer.parseInt(in.readLine());
+     		System.out.println("3");
      			while ((serverMsg = in.readLine()) != null) //message for repeated login info
       	   	System.out.println(in.readLine());
     	 while((loggedIn==0)) //if they never get the correct answer server will close connection - might have an error issue here
